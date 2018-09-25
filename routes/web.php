@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('user.index');
 });
+
+Route::resource('user', 'UserController');
+
+
+Route::get('/table/user', 'UserController@getTable')->name('table.user');
