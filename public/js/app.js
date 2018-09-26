@@ -1,11 +1,3 @@
-const toast = swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000
-});
-
-
 $('body').on('click', '.modal-show', function(event) {
     event.preventDefault();
 
@@ -45,9 +37,10 @@ $('#modal-btn-save').click(function(event) {
             form.trigger('reset'); //Clear Form
             $('#modal').modal('hide'); //Hide modal
             $('#datatable').DataTable().ajax.reload(); //melakukan reload pada datatables dengan id tertentu jika berhasil menambahkan data
-            toast({
+            swal({
                 type: 'success',
-                title: 'Success!'
+                title: 'Success!',
+                text: 'Data has been saved!',
             }); // show flash message
         },
         error: function (xhr) {
@@ -64,3 +57,47 @@ $('#modal-btn-save').click(function(event) {
         }
     });
 });
+
+$('body').on('click', '.btn-delete', function (event) {
+    event.preventDefault();
+
+    var me = $(this),
+        url = me.attr('href'),
+        csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                 $.ajax({
+                     url: url,
+                     type: "POST",
+                     data: {
+                         '_method': 'DELETE',
+                         '_token': csrf_token
+                     },
+                     success: function (response) {
+                        $('#datatable').DataTable().ajax.reload();
+                        swal({
+                            type: 'success',
+                            title: 'Success!',
+                            text: 'Data has been deleted!',
+                        });
+                     },
+                     error: function (xhr) {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                     }
+                });
+            }
+        })
+})
