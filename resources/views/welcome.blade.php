@@ -67,7 +67,7 @@
       <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Datatable
-                <button class="btn btn-default pull-right" style="margin-top: -8px;" data-toggle="modal" data-target="#myModal"><i class="icon-plus"></i> Create</button>
+                <a href="{{ route('user.create') }}" class="btn btn-success pull-right show-modal" style="margin-top: -8px;"><i class="icon-plus"></i> Create</a>
             </h3>
           </div>
           <div class="panel-body">
@@ -98,32 +98,7 @@
     </div> <!-- /container -->
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Form Input</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="name" class="control-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="control-label">E-Mail:</label>
-                        <input type="email" class="form-control" id="email" name="email">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    @include('modal')
 
 
     <!-- Bootstrap core JavaScript
@@ -137,6 +112,9 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+
+    
+    <script src="{{ asset('js/app.js') }}"></script>
 
 
     <script>
