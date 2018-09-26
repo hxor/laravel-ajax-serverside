@@ -1,3 +1,11 @@
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+
+
 $('.show-modal').click(function(event) {
     event.preventDefault();
 
@@ -28,7 +36,12 @@ $('#modal-btn-save').click(function(event) {
         method: method,
         data: form.serialize(), //mengambil seluruh data dari form dengan url-encode
         success: function (response) {
+            $('#modal').modal('hide'); //Hide modal
             $('#datatable').DataTable().ajax.reload(); //melakukan reload pada datatables dengan id tertentu jika berhasil menambahkan data
+            toast({
+                type: 'success',
+                title: 'Signed in successfully'
+            })
         },
         error: function (xhr) {
             var errors = xhr.responseJSON; //simpan response xhr di variabel errors

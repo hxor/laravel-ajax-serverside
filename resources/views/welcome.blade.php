@@ -110,12 +110,14 @@
     <!-- Datatables -->
     <script src="{{ asset('assets/vendor/datatables/datatables.min.js') }}"></script>
 
+    <!-- Sweetalert2 -->
+    <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('assets/js/ie10-viewport-bug-workaround.js') }}"></script>
 
     
     <script src="{{ asset('js/app.js') }}"></script>
-
 
     <script>
         $(document).ready(function() {
