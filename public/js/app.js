@@ -6,10 +6,16 @@ const toast = swal.mixin({
 });
 
 
-$('.show-modal').click(function(event) {
+$('body').on('click', '.modal-show', function(event) {
     event.preventDefault();
 
-    var url = $(this).attr('href'); //mengambil route create untuk menampilkan form
+    var me = $(this),
+        url = me.attr('href'), //mengambil route create untuk menampilkan form
+        title = me.attr('title');
+
+    $('#modal-title').text(title);
+    $('#modal-btn-save').text(me.hasClass('edit') ? 'Update' : 'Create'); 
+
     $.ajax({
         url: url, //url dari route di simpan dari attribut href ke variabel url
         dataType: 'html', //data yang dikeluarkan berupa html / form input berupa tag html
@@ -26,7 +32,7 @@ $('#modal-btn-save').click(function(event) {
 
     var form = $('#modal-body form'), //seleksi form yang digunakan
         url = form.attr('action'), //mengambil nilai action dari form yang dipilih
-        method = 'POST'; //menentukan method HTTP yang akan digunakan
+        method = $('input[name=_method]').val() == undefined ? 'POST' : 'PUT'; //menentukan method HTTP yang akan digunakan
     
     form.find('.help-block').remove(); //mencari element yang memiliki class "help-block" dan menghapusnya jika ada
     form.find('.form-group').removeClass('has-error'); //mencari element yang memiliki class "form-group" dan menghapus class "has-error" saja jika ada
@@ -36,12 +42,13 @@ $('#modal-btn-save').click(function(event) {
         method: method,
         data: form.serialize(), //mengambil seluruh data dari form dengan url-encode
         success: function (response) {
+            form.trigger('reset'); //Clear Form
             $('#modal').modal('hide'); //Hide modal
             $('#datatable').DataTable().ajax.reload(); //melakukan reload pada datatables dengan id tertentu jika berhasil menambahkan data
             toast({
                 type: 'success',
-                title: 'Signed in successfully'
-            })
+                title: 'Success!'
+            }); // show flash message
         },
         error: function (xhr) {
             var errors = xhr.responseJSON; //simpan response xhr di variabel errors

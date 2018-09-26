@@ -1,4 +1,8 @@
-{!! Form::model($model, ['route' => 'user.store']) !!}
+{!! Form::model($model, [
+    'route' => $model->exists ? ['user.update', $model->id] : 'user.store',
+    'method' => $model->exists ? 'PUT' : 'POST' 
+]) !!}
+    {!! Form::hidden('id') !!}
     <div class="form-group">
         <label for="name" class="control-label">Name:</label>
         {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
@@ -8,6 +12,3 @@
         {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
     </div>
 {!! Form::close() !!}
-
-{{-- 3209101608940005 --}}
-{{-- 3209101709071287 --}}
